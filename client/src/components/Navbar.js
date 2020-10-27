@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -27,21 +28,22 @@ export default function Navbar() {
         <div className={classes.root}>
             <AppBar position="static" color="inherit">
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
-                    >
-                        <MenuIcon />
-                    </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        News
+                        RK TUTORS
                     </Typography>
                     <div>
-                        <Button color="inherit">Login</Button>
-                        <Button color="inherit">Login</Button>
-                        <Button color="inherit">Login</Button>
+                        <Button
+                            color="inherit"
+                            onClick={() => (window.location = `/signup`)}
+                        >
+                            Sign Up
+                        </Button>
+                        <Button
+                            color="inherit"
+                            onClick={() => (window.location = `/login`)}
+                        >
+                            Login
+                        </Button>
                     </div>
                 </Toolbar>
             </AppBar>

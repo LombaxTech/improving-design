@@ -28,5 +28,5 @@
       "passwordField": "password"
     }
   },
-  "mongodb": ""
+  "mongodb": "mongodb://user:password123@ds247058.mlab.com:47058/mytutor-clone"
 }
