@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import client from "../feathers";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -21,7 +23,7 @@ function Copyright() {
         <Typography variant="body2" color="textSecondary" align="center">
             {"Copyright © "}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+                RK TUTORS
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
@@ -52,6 +54,27 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
     const classes = useStyles();
 
+    const usersService = client.service("users");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const updateEmailValue = (e) => setEmail(e.target.value);
+    const updatePasswordValue = (e) => setPassword(e.target.value);
+
+    const signin = async (e) => {
+        e.preventDefault();
+        // console.log("attempted sign up");
+        try {
+            let user = await client.authenticate({
+                strategy: "local",
+                email,
+                password,
+            });
+            window.location = "./";
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -62,7 +85,7 @@ export default function Login() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={signin}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -73,6 +96,8 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value={email}
+                        onChange={updateEmailValue}
                     />
                     <TextField
                         variant="outlined"
@@ -84,10 +109,8 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
+                        value={password}
+                        onChange={updatePasswordValue}
                     />
                     <Button
                         type="submit"
@@ -105,7 +128,7 @@ export default function Login() {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="/signup" variant="body2">
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

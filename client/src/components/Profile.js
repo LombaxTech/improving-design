@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import client from "../feathers";
 
 import Avatar from "@material-ui/core/Avatar";
@@ -13,6 +12,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+import { DropzoneArea } from "material-ui-dropzone";
 
 function Copyright() {
     return (
@@ -45,35 +46,50 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    dropzone: {
+        height: "150px",
+        width: "150px",
+        minHeight: "0px !important",
+        marginBottom: theme.spacing(3),
+    },
 }));
 
-export default function Signup() {
+export default function Profile() {
     const classes = useStyles();
 
     const userService = client.service("user");
+    const [user, setUser] = useState({});
+    async function init() {
+        let user = await client.authenticate();
+        user = user.user;
+        console.log(user);
+        setUser(user);
+        setEmail(user.email);
+        setName(user.name);
+    }
+
+    useEffect(() => {
+        init();
+    }, []);
 
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [file, setFile] = useState({});
 
     const updateEmailValue = (e) => setEmail(e.target.value);
     const updatePasswordValue = (e) => setPassword(e.target.value);
     const updateNameValue = (e) => setName(e.target.value);
 
-    const signup = async (e) => {
+    const update = async (e) => {
         e.preventDefault();
-        try {
-            let user = await userService.create({
-                name,
-                email,
-                password,
-            });
-
-            await client.authenticate({ strategy: "local", email, password });
-            window.location = "/";
-        } catch (error) {
-            console.log(error);
+        let valuesToChange = {};
+        if (name !== "") valuesToChange = { ...valuesToChange, name };
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "testpreset");
         }
     };
 
@@ -81,53 +97,47 @@ export default function Signup() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                <Avatar
+                    className={classes.avatar}
+                    alt="..."
+                    src="https://www.gstatic.com/tv/thumb/persons/877857/877857_v9_aa.jpg"
+                />
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    {user.name}
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={signup}>
+                <form className={classes.form} noValidate onSubmit={update}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
-                                autoComplete="name"
-                                name="name"
-                                variant="outlined"
-                                required
                                 fullWidth
-                                id="name"
                                 label="Name"
-                                autoFocus
                                 value={name}
                                 onChange={updateNameValue}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                variant="outlined"
-                                required
                                 fullWidth
-                                id="email"
                                 label="Email Address"
-                                name="email"
-                                autoComplete="email"
                                 value={email}
-                                onChange={updateEmailValue}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                variant="outlined"
-                                required
                                 fullWidth
-                                name="password"
                                 label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
                                 value={password}
                                 onChange={updatePasswordValue}
+                                type="password"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <DropzoneArea
+                                filesLimit={1}
+                                showPreviews={true}
+                                showPreviewsInDropzone={false}
+                                dropzoneClass={classes.dropzone}
+                                onChange={(file) => setFile(file[0])}
                             />
                         </Grid>
                     </Grid>
@@ -136,17 +146,9 @@ export default function Signup() {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        className={classes.submit}
                     >
-                        Sign Up
+                        Update Profile
                     </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link href="/login" variant="body2">
-                                Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
             </div>
             <Box mt={5}>

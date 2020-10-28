@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import client from "../feathers";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -8,6 +9,11 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import { Avatar } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+
+import "../App.scss";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,30 +29,113 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
     const classes = useStyles();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleProfileMenuOpen = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            keepMounted
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem
+                onClick={async () => {
+                    window.location = "/profile";
+                }}
+            >
+                Profile
+            </MenuItem>
+            <MenuItem
+                onClick={async () => {
+                    await client.logout();
+                    window.location = "/";
+                }}
+            >
+                Sign Out
+            </MenuItem>
+        </Menu>
+    );
+
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
+
+    async function init() {
+        try {
+            let result = await client.authenticate();
+            setUser(result.user);
+            setLoggedIn(true);
+        } catch (err) {
+            console.log(err);
+            setLoggedIn(false);
+        }
+    }
+
+    useEffect(() => {
+        init();
+    }, []);
 
     return (
         <div className={classes.root}>
             <AppBar position="static" color="inherit">
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography
+                        variant="h6"
+                        className={`${classes.title} pageTitle`}
+                        onClick={() => (window.location = "/")}
+                    >
                         RK TUTORS
                     </Typography>
                     <div>
-                        <Button
-                            color="inherit"
-                            onClick={() => (window.location = `/signup`)}
-                        >
-                            Sign Up
-                        </Button>
-                        <Button
-                            color="inherit"
-                            onClick={() => (window.location = `/login`)}
-                        >
-                            Login
-                        </Button>
+                        {!loggedIn && (
+                            <div>
+                                <Button
+                                    color="inherit"
+                                    onClick={() =>
+                                        (window.location = `/signup`)
+                                    }
+                                >
+                                    Sign Up
+                                </Button>
+                                <Button
+                                    color="inherit"
+                                    onClick={() => (window.location = `/login`)}
+                                >
+                                    Login
+                                </Button>
+                            </div>
+                        )}
+                        {loggedIn && (
+                            <div>
+                                <IconButton
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-haspopup="true"
+                                    color="inherit"
+                                    onClick={handleProfileMenuOpen}
+                                >
+                                    <Avatar
+                                        alt="Sheldon Cooper"
+                                        src={user.profilePictureId}
+                                        style={{ alignSelf: "center" }}
+                                    />
+                                </IconButton>
+                            </div>
+                        )}
                     </div>
                 </Toolbar>
             </AppBar>
+            {renderMenu}
         </div>
     );
 }
