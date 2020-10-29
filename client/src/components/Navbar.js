@@ -102,6 +102,14 @@ export default function Navbar() {
                                 <Button
                                     color="inherit"
                                     onClick={() =>
+                                        (window.location = `/tutors`)
+                                    }
+                                >
+                                    Tutors
+                                </Button>
+                                <Button
+                                    color="inherit"
+                                    onClick={() =>
                                         (window.location = `/signup`)
                                     }
                                 >
@@ -117,6 +125,14 @@ export default function Navbar() {
                         )}
                         {loggedIn && (
                             <div>
+                                <Button
+                                    color="inherit"
+                                    onClick={() =>
+                                        (window.location = `/tutors`)
+                                    }
+                                >
+                                    Tutors
+                                </Button>
                                 <IconButton
                                     edge="end"
                                     aria-label="account of current user"
