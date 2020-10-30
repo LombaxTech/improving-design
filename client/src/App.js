@@ -8,6 +8,8 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Tutors from "./components/Tutors";
 import TutorPage from "./components/TutorPage";
+import Chats from "./components/Chats";
+import Chatroom from "./components/Chatroom";
 
 import "./App.scss";
 
@@ -24,6 +26,8 @@ export default function App() {
                 <Route path="/tutor/:tutorId" component={TutorPage} />
                 <Route path="/profile" exact component={Profile} />
                 <Route path="/tutors" exact component={Tutors} />
+                <Route path="/chats" exact component={Chats} />
+                <Route path="/chat/:partnerId" component={Chatroom} />
             </Switch>
         </Router>
     );

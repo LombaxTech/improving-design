@@ -1,0 +1,26 @@
+.chatroom {
+    // background: yellow;
+    width: 80%;
+    height: fit-content;
+    margin: 0 auto;
+}
+
+.send-message {
+    position: fixed;
+    bottom: 0;
+    // background: green;
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    // align-items: space-between;
+    // justify-content: space-between;
+}
+
+.message-input {
+    width: 85%;
+    // margin: 10px;s
+}
+
+.submit-message {
+    // margin-left: 10px !important;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import TutorCard from "./TutorCard";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        paddingTop: "10px",
     },
     tutors: {
         display: "flex",
@@ -27,7 +29,7 @@ export default function Tutors() {
 
     return (
         <div className={classes.root}>
-            <h2>Tutors</h2>
+            <Typography variant="h3">Tutors</Typography>
             <div className={classes.tutors}>
                 <TutorCard />
                 <TutorCard />
