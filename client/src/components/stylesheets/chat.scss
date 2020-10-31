@@ -1,12 +1,35 @@
 .chatroom {
     // background: yellow;
-    width: 80%;
-    height: fit-content;
+    // width: 80%;
+    padding: 20px;
+    max-height: 80vh;
     margin: 0 auto;
+    overflow-y: scroll;
+    // padding-bottom: 30px;
+}
+
+.messages {
+    // background: rgba(131, 131, 131, 0.1);
+    // padding: 10px;
+    border-radius: 3px;
+}
+
+.message {
+    padding: 5px;
+
+    // width: fit-content;
+}
+
+.user-message {
+    background: rgba(173, 167, 167, 0.1);
+}
+
+.partner-message {
+    text-align: right;
 }
 
 .send-message {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     // background: green;
     width: 80%;
@@ -18,6 +41,7 @@
 
 .message-input {
     width: 85%;
+    // height: 2% !important;
     // margin: 10px;s
 }
 
