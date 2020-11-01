@@ -116,8 +116,9 @@ export default function Navbar() {
                                     Sign Up
                                 </Button>
                                 <Button
-                                    color="inherit"
+                                    color="inherint"
                                     onClick={() => (window.location = `/login`)}
+                                    variant="contained"
                                 >
                                     Login
                                 </Button>
