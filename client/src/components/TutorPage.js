@@ -1,5 +1,5 @@
 import React from "react";
-import "./stylesheets/tutorpage.scss";
+import "../styles/tutorpage.scss";
 
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -11,23 +11,22 @@ export default function TutorPage(props) {
         <div className="tutorpage">
             <div className="about-tutor">
                 <div className="pic-name">
-                    <div className="profile-pic">
-                        <Avatar
-                            alt="Remy Sharp"
-                            src="https://boxemag.com/media/zoo/images/buakka_f07c997111fe349cfb98ea94dc73e077.jpg"
-                            style={{ width: "75px", height: "75px" }}
-                        />
-                    </div>
                     <div className="name-course">
-                        <Typography variant="h6">Buakaw</Typography>
+                        <Typography variant="h4">Buakaw</Typography>
                         <Typography variant="h6" className="h6">
                             University of Thailand - Sports Science BSc
                         </Typography>
                     </div>
+                    <Avatar
+                        src="https://boxemag.com/media/zoo/images/buakka_f07c997111fe349cfb98ea94dc73e077.jpg"
+                        className="profile-pic"
+                    />
                 </div>
                 <div className="about-me">
-                    <Typography variant="h6">About Me</Typography>
-                    <Typography variant="body">
+                    <Typography variant="h5" className="title">
+                        About Me
+                    </Typography>
+                    <Typography variant="body1">
                         Lorem ipsum, dolor sit amet consectetur adipisicing
                         elit. Recusandae aliquam doloribus fugit ipsam cumque
                         voluptatem soluta expedita, reprehenderit similique
@@ -40,15 +39,26 @@ export default function TutorPage(props) {
                 </div>
             </div>
             <div className="contact-tutor">
-                <Typography variant="h6">Contact Buakaw</Typography>
+                <Typography variant="h4">Contact Buakaw</Typography>
                 <Button
                     variant="contained"
                     fullWidth={true}
+                    color="secondary"
+                    size="large"
                     className="send-message"
                 >
                     Send Message
                 </Button>
-                <Link href="/tutors">View Other Tutors</Link>
+                <Button
+                    variant="contained"
+                    fullWidth={true}
+                    color="secondary"
+                    size="large"
+                    className="view-other-tutors"
+                    onClick={() => (window.location = `/tutors`)}
+                >
+                    View Other Tutors
+                </Button>
             </div>
         </div>
     );

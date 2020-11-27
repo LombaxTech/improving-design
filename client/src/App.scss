@@ -1,16 +1,51 @@
-.hero {
-    height: 400px;
-    background-image: url("https://edu.google.com/images/social_image.jpg");
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    // overflow: auto;
+}
+
+.home-page {
+    min-height: 550px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .view-tutors {
+        width: 30%;
+        background: yellow;
+        margin-top: 40px;
+        .view-tutors-button {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.hero-image {
+    width: 100%;
+    height: 550px;
+    background: rgba(255, 0, 106, 0.4);
+    background-image: url("https://www.okaloosaschools.com/files/2020-03/onlineedu.jpg");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.8;
+    background-size: contain;
+
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    opacity: 0.4;
     // box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     // transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-    &:hover {
-        opacity: 0.7;
-    }
+    // &:hover {
+    //     opacity: 0.7;
+    // }
 }
 
 // .more-info {
@@ -34,20 +69,3 @@
     justify-content: center;
     align-items: center;
 }
-
-// .details {
-//     padding: 10px;
-//     // border: 1px solid black;
-//     // position: relative;
-//     // z-index: 10;
-//     box-shadow: 5px 5px black;
-
-//     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-//     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-//     &:hover {
-//         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-//             0 10px 10px rgba(0, 0, 0, 0.22);
-//         cursor: pointer;
-//     }
-// }

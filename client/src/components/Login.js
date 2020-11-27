@@ -16,7 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import "../App.scss";
-import "./stylesheets/login.scss";
+import "../styles/login.scss";
 
 function Copyright() {
     return (

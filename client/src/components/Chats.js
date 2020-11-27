@@ -1,5 +1,4 @@
 import React from "react";
-import "./stylesheets/chats.scss";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 

@@ -1,0 +1,12 @@
+.tutors-page {
+    // background: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .tutor-cards {
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

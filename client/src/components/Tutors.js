@@ -1,36 +1,15 @@
 import React from "react";
 import TutorCard from "./TutorCard";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        // background: "green",
-        // width: "100%",
-        // height: "100%",
-        // padding: "20px 30px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: "10px",
-    },
-    tutors: {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "center",
-    },
-}));
+import "../styles/tutors.scss";
 
 export default function Tutors() {
-    const classes = useStyles();
-
     return (
-        <div className={classes.root}>
-            <Typography variant="h3">Tutors</Typography>
-            <div className={classes.tutors}>
+        <div className="tutors-page">
+            {/* <Typography variant="h3">Tutors</Typography> */}
+            {/* <div className="tutors-cards"> */}
+            <div className="tutor-cards">
                 <TutorCard />
                 <TutorCard />
                 <TutorCard />
