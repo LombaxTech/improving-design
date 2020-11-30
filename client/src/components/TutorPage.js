@@ -52,6 +52,15 @@ export default function TutorPage(props) {
                 <Button
                     variant="contained"
                     fullWidth={true}
+                    color="primary"
+                    size="large"
+                    className="book-lesson"
+                >
+                    Book Lesson
+                </Button>
+                <Button
+                    variant="contained"
+                    fullWidth={true}
                     color="secondary"
                     size="large"
                     className="view-other-tutors"

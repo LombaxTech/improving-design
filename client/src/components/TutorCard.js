@@ -5,30 +5,34 @@ import Typography from "@material-ui/core/Typography";
 
 import "../styles/tutorcard.scss";
 
-export default function TutorCard({}) {
+export default function TutorCard({ tutor }) {
     return (
         <div className="tutor-card">
             <Avatar
                 alt="Remy Sharp"
-                src="https://boxemag.com/media/zoo/images/buakka_f07c997111fe349cfb98ea94dc73e077.jpg"
+                src={
+                    tutor.profilePictureId
+                        ? tutor.profilePictureId
+                        : "https://boxemag.com/media/zoo/images/buakka_f07c997111fe349cfb98ea94dc73e077.jpg"
+                }
                 className="profile-pic"
             />
             <div className="user-info">
                 <Typography variant="h5" className="name">
-                    Buakaw
+                    {tutor.name}
                 </Typography>
                 <Typography variant="h6" className="h6" className="course">
-                    Politics
+                    {tutor.courseDetails.major}
                 </Typography>
                 <Typography variant="body1" className="uni">
-                    University of Bath
+                    {tutor.courseDetails.university}
                 </Typography>
             </div>
             <div className="view-profile">
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => (window.location = "/tutor/iaNj9sjs")}
+                    onClick={() => (window.location = `/tutor/${tutor._id}`)}
                 >
                     View Profile
                 </Button>

@@ -29,16 +29,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
     const classes = useStyles();
+
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
+
+    async function init() {
+        try {
+            let result = await client.authenticate();
+            setUser(result.user);
+            setLoggedIn(true);
+            console.log(result.user);
+        } catch (err) {
+            console.log(err);
+            setLoggedIn(false);
+        }
+    }
+
+    useEffect(() => {
+        init();
+    }, []);
+
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleProfileMenuOpen = (e) => {
-        setAnchorEl(e.currentTarget);
-    };
+    const handleMenuClose = () => setAnchorEl(null);
+    const handleProfileMenuOpen = (e) => setAnchorEl(e.currentTarget);
 
     const renderMenu = (
         <Menu
@@ -67,23 +82,80 @@ export default function Navbar() {
         </Menu>
     );
 
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [user, setUser] = useState({});
-
-    async function init() {
-        try {
-            let result = await client.authenticate();
-            setUser(result.user);
-            setLoggedIn(true);
-        } catch (err) {
-            console.log(err);
-            setLoggedIn(false);
-        }
-    }
-
-    useEffect(() => {
-        init();
-    }, []);
+    const LoggedOutLinks = () => (
+        <div>
+            <Button
+                color="inherit"
+                onClick={() => (window.location = `/tutors`)}
+            >
+                Tutors
+            </Button>
+            <Button
+                color="inherit"
+                onClick={() => (window.location = `/signup`)}
+            >
+                Sign Up
+            </Button>
+            <Button
+                color="inherint"
+                onClick={() => (window.location = `/login`)}
+            >
+                Login
+            </Button>
+        </div>
+    );
+    const TutorLinks = () => (
+        <div>
+            <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                onClick={handleProfileMenuOpen}
+            >
+                <Avatar
+                    alt="Sheldon Cooper"
+                    src={user.profilePictureId}
+                    style={{ alignSelf: "center" }}
+                />
+            </IconButton>
+        </div>
+    );
+    const StudentLinks = () => (
+        <div>
+            <Button
+                color="inherit"
+                onClick={() => (window.location = `/tutors`)}
+            >
+                Tutors
+            </Button>
+            <Button
+                color="inherit"
+                onClick={() => (window.location = `/lessons`)}
+            >
+                Lessons
+            </Button>
+            <Button
+                color="inherit"
+                onClick={() => (window.location = `/messages`)}
+            >
+                Messages
+            </Button>
+            <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                onClick={handleProfileMenuOpen}
+            >
+                <Avatar
+                    alt="Sheldon Cooper"
+                    src={user.profilePictureId}
+                    style={{ alignSelf: "center" }}
+                />
+            </IconButton>
+        </div>
+    );
 
     return (
         <div className={classes.root}>
@@ -97,57 +169,9 @@ export default function Navbar() {
                         RK TUTORS
                     </Typography>
                     <div>
-                        {!loggedIn && (
-                            <div>
-                                <Button
-                                    color="inherit"
-                                    onClick={() =>
-                                        (window.location = `/tutors`)
-                                    }
-                                >
-                                    Tutors
-                                </Button>
-                                <Button
-                                    color="inherit"
-                                    onClick={() =>
-                                        (window.location = `/signup`)
-                                    }
-                                >
-                                    Sign Up
-                                </Button>
-                                <Button
-                                    color="inherint"
-                                    onClick={() => (window.location = `/login`)}
-                                >
-                                    Login
-                                </Button>
-                            </div>
-                        )}
-                        {loggedIn && (
-                            <div>
-                                <Button
-                                    color="inherit"
-                                    onClick={() =>
-                                        (window.location = `/tutors`)
-                                    }
-                                >
-                                    Tutors
-                                </Button>
-                                <IconButton
-                                    edge="end"
-                                    aria-label="account of current user"
-                                    aria-haspopup="true"
-                                    color="inherit"
-                                    onClick={handleProfileMenuOpen}
-                                >
-                                    <Avatar
-                                        alt="Sheldon Cooper"
-                                        src={user.profilePictureId}
-                                        style={{ alignSelf: "center" }}
-                                    />
-                                </IconButton>
-                            </div>
-                        )}
+                        {!loggedIn && LoggedOutLinks()}
+                        {loggedIn && user.role === 1 && TutorLinks()}
+                        {loggedIn && user.role === 0 && StudentLinks()}
                     </div>
                 </Toolbar>
             </AppBar>
