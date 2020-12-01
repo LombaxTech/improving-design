@@ -12,11 +12,12 @@ module.exports = function (app) {
       name: { type: String, required: true },
       profilePictureId: String,
       savedTutors: [{ type: mongooseClient.ObjectId, ref: "users" }],
-      role: { type: Number, required: true },
+      role: { type: Number, required: true, default: 0 },
       courseDetails: {
         university: String,
         major: String,
       },
+      teachingSubjects: [{ type: String }],
     },
     {
       timestamps: true,
