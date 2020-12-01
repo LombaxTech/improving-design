@@ -33,6 +33,7 @@ export default function TutorCard({ tutor }) {
                     variant="contained"
                     color="secondary"
                     onClick={() => (window.location = `/tutor/${tutor._id}`)}
+                    fullWidth={true}
                 >
                     View Profile
                 </Button>

@@ -1,7 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 // import green from "@material-ui/core/colors/green";
 
@@ -19,7 +24,9 @@ const theme = createMuiTheme({
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
-            <App />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <App />
+            </MuiPickersUtilsProvider>
         </ThemeProvider>
     </React.StrictMode>,
     document.getElementById("root")

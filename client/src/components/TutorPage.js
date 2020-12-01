@@ -1,12 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/tutorpage.scss";
+import client from "../feathers.js";
 
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import { DatePicker, TimePicker } from "@material-ui/pickers";
 
-export default function TutorPage(props) {
+import { Modal } from "react-bootstrap";
+
+export default function TutorPage({ match }) {
+    const usersService = client.service("user");
+    const [user, setUser] = useState({});
+    const [tutor, setTutor] = useState({});
+
+    async function init() {
+        try {
+            let user = await client.authenticate();
+            console.log(user.user);
+            setUser(user.user);
+
+            let tutor = await usersService.get(match.params.tutorId);
+            console.log(tutor);
+            setTutor(tutor);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        init();
+    }, []);
+
+    const [show, setShow] = useState(false);
+    const BookingModal = () => (
+        <Modal show={show} onHide={() => setShow(false)} centered>
+            <Modal.Body className="booking-modal-body">
+                <Typography variant="h4" className="booking-modal-title">
+                    Book Lesson with Brandon
+                </Typography>
+                <div className="date-time">
+                    <DatePicker className="booking-date-picker" />
+                    <TimePicker className="booking-time-picker" />
+                </div>
+                <div className="booking-button">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth={true}
+                    >
+                        Book Lesson
+                    </Button>
+                </div>
+            </Modal.Body>
+        </Modal>
+    );
+
     return (
         <div className="tutorpage">
             <div className="about-tutor">
@@ -55,6 +103,7 @@ export default function TutorPage(props) {
                     color="primary"
                     size="large"
                     className="book-lesson"
+                    onClick={() => setShow(true)}
                 >
                     Book Lesson
                 </Button>
@@ -69,6 +118,7 @@ export default function TutorPage(props) {
                     View Other Tutors
                 </Button>
             </div>
+            {BookingModal()}
         </div>
     );
 }

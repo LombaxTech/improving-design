@@ -86,3 +86,30 @@
         }
     }
 }
+
+.booking-modal-body {
+    // background: yellow;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .date-time {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+
+        .booking-date-picker,
+        .booking-time-picker {
+            &:hover {
+                cursor: pointer !important;
+            }
+        }
+    }
+
+    .booking-button {
+        width: 100%;
+    }
+}
