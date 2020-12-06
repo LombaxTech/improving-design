@@ -5,12 +5,15 @@ import client from "../feathers.js";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { DatePicker, TimePicker } from "@material-ui/pickers";
+import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { DatePicker, TimePicker, DateTimePicker } from "@material-ui/pickers";
 
 import { Modal } from "react-bootstrap";
 
 export default function TutorPage({ match }) {
     const usersService = client.service("user");
+    const bookingService = client.service("bookings");
     const [user, setUser] = useState({});
     const [tutor, setTutor] = useState({});
 
@@ -32,28 +35,83 @@ export default function TutorPage({ match }) {
     }, []);
 
     const [show, setShow] = useState(false);
-    const BookingModal = () => (
-        <Modal show={show} onHide={() => setShow(false)} centered>
-            <Modal.Body className="booking-modal-body">
-                <Typography variant="h4" className="booking-modal-title">
-                    Book Lesson with Brandon
-                </Typography>
-                <div className="date-time">
-                    <DatePicker className="booking-date-picker" />
-                    <TimePicker className="booking-time-picker" />
-                </div>
-                <div className="booking-button">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth={true}
-                    >
-                        Book Lesson
-                    </Button>
-                </div>
-            </Modal.Body>
-        </Modal>
-    );
+    const BookingModal = () => {
+        const [date, setDate] = useState(new Date());
+        const [loading, setLoading] = useState(false);
+        const [success, setSuccess] = useState(false);
+
+        const handleDateChange = (data) => {
+            console.log(data);
+            setDate(data);
+        };
+
+        const bookLesson = async () => {
+            try {
+                setLoading(true);
+                let result = await bookingService.create({
+                    tutor: tutor._id,
+                    student: user._id,
+                    date,
+                });
+                console.log(result);
+                setSuccess(true);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        return (
+            <Modal show={show} onHide={() => setShow(false)} centered>
+                <Modal.Body className="booking-modal-body">
+                    {loading && <CircularProgress />}
+                    {!loading && (
+                        <div>
+                            <Typography
+                                variant="h4"
+                                className="booking-modal-title"
+                            >
+                                Book Lesson with Brandon
+                            </Typography>
+                            <div className="date-time">
+                                {/* <DatePicker className="booking-date-picker"
+                            onChange={handleDateChange}
+                         />
+                        <TimePicker className="booking-time-picker" /> */}
+                                <DateTimePicker
+                                    onChange={handleDateChange}
+                                    minutesStep={60}
+                                    disablePast={true}
+                                    value={date}
+                                />
+                            </div>
+                            <div className="booking-button">
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth={true}
+                                    onClick={bookLesson}
+                                >
+                                    Book Lesson
+                                </Button>
+                            </div>
+                            <div className="success-or-error">
+                                <Alert
+                                    severity="success"
+                                    style={{
+                                        display: !success ? "none" : "",
+                                        marginTop: "15px",
+                                    }}
+                                >
+                                    Your Booking has been Successful!
+                                </Alert>
+                            </div>
+                        </div>
+                    )}
+                </Modal.Body>
+            </Modal>
+        );
+    };
 
     return (
         <div className="tutorpage">
