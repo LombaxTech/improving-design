@@ -106,6 +106,12 @@ export default function Navbar() {
     );
     const TutorLinks = () => (
         <div>
+            <Button
+                color="inherit"
+                onClick={() => (window.location = `/bookings/${user._id}`)}
+            >
+                Bookings
+            </Button>
             <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -131,7 +137,7 @@ export default function Navbar() {
             </Button>
             <Button
                 color="inherit"
-                onClick={() => (window.location = `/lessons`)}
+                onClick={() => (window.location = `/bookings/${user._id}`)}
             >
                 Lessons
             </Button>

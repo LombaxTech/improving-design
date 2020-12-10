@@ -10,7 +10,7 @@ import Tutors from "./components/Tutors";
 import TutorPage from "./components/TutorPage";
 import Chats from "./components/Chats";
 import Chatroom from "./components/Chatroom";
-
+import Bookings from "./components/Bookings";
 import Experimental from "./components/Experimental";
 
 import "./App.scss";
@@ -30,6 +30,7 @@ export default function App() {
                 <Route path="/tutors" exact component={Tutors} />
                 <Route path="/chats" exact component={Chats} />
                 <Route path="/chat/:partnerId" component={Chatroom} />
+                <Route path="/bookings/:userId" exact component={Bookings} />
                 <Route path="/experimental" component={Experimental} />
             </Switch>
         </Router>
