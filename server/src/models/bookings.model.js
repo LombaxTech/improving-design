@@ -11,7 +11,7 @@ module.exports = function (app) {
       tutor: { type: mongooseClient.ObjectId, ref: "user", required: true },
       student: { type: mongooseClient.ObjectId, ref: "user", required: true },
       subject: String,
-      date: Date,
+      date: { type: Date, required: true },
     },
     {
       timestamps: true,
