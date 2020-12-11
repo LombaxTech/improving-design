@@ -112,6 +112,12 @@ export default function Navbar() {
             >
                 Bookings
             </Button>
+            <Button
+                color="inherit"
+                onClick={() => (window.location = `/chats`)}
+            >
+                Messages
+            </Button>
             <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -143,7 +149,7 @@ export default function Navbar() {
             </Button>
             <Button
                 color="inherit"
-                onClick={() => (window.location = `/messages`)}
+                onClick={() => (window.location = `/chats`)}
             >
                 Messages
             </Button>

@@ -152,6 +152,7 @@ export default function TutorPage({ match }) {
                     color="secondary"
                     size="large"
                     className="send-message"
+                    onClick={() => (window.location = `/chat/${tutor._id}`)}
                 >
                     Send Message
                 </Button>

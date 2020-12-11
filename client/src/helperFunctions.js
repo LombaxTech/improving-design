@@ -7,3 +7,9 @@ export const roundMinutes = (date) => {
 
     return date;
 };
+
+export const smallBigString = (string1, string2) => {
+    if (string1 > string2) return string2 + string1;
+    return string1 + string2;
+};
+
